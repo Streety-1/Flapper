@@ -12,7 +12,7 @@ ScriptVersion = 'V1'
 
 urltocheckwifi = "https://www.google.com/"
 
-requiredmodules = {'pypiwin32', 'requests', 'simple-term-menu'}
+requiredmodules = {'requests', 'simple-term-menu'}
 
 #-------------------Functions-------------------#
 def pipinstall(package):
@@ -29,7 +29,9 @@ def runPython(name):
 
 try:
     urllib.request.urlopen(urltocheckwifi)
-    print(" | Updating modules... |")
+    print("| Updating pip |")
+    systemCmd('python.exe -m pip install --upgrade pip --quiet')
+    print("| Updating modules |")
 
     #install modules
     for x in requiredmodules:
@@ -39,9 +41,8 @@ try:
         except ImportError:
             pipinstall(x)
 
-    #install dbus for AP checker
-    systemCmd('sudo apt install python-dbus')
-
+    print("| Updating dbus |")
+    systemCmd('sudo apt install python-dbus --quiet')
     clear()
 
 except urllib.error.URLError:
@@ -49,7 +50,6 @@ except urllib.error.URLError:
 
 #------------------------------------INSTALLED IMPORTS------------------------------------#
 
-import win32crypt
 import requests
 from simple_term_menu import TerminalMenu
 
