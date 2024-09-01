@@ -8,6 +8,9 @@ requiredmodules = {'requests', 'simple-term-menu'}
 
 #-------------------Prequisit Installer-------------------#
 
+def pipinstall(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package], stdout=subprocess.DEVNULL)
+
 try:
     urllib.request.urlopen(urltocheckwifi)
     print("| Updating pip |")
