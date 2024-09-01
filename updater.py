@@ -1,14 +1,15 @@
 # Download Latest version from github repo
 # https://github.com/Streety-1/Flapper-Nought.git
 
+import os
 import subprocess
 import sys
 import urllib.request
-import requests
+import time
 
 urltocheckwifi = "https://www.google.com/"
 
-requiredmodules = {'requests', 'simple-term-menu'}
+requiredmodules = {'simple-term-menu'}
 
 #-------------------Prequisit Installer-------------------#
 
@@ -19,6 +20,8 @@ def pipinstall(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package], stdout=subprocess.DEVNULL)
 
 try:
+    pipinstall('requests')
+    import requests
     urllib.request.urlopen(urltocheckwifi)
     print("| Updating pip |")
     systemCmd('python.exe -m pip install --upgrade pip --quiet')
@@ -36,13 +39,11 @@ try:
     systemCmd('sudo apt install python-dbus --quiet')
     
     
-    
+    print("| Cloning |")
     #get script from git and launch
     
-    
-    
-    clear()
 
 except urllib.error.URLError:
-    print("No wifi")
+    print("Error: No wifi connection")
+    task.wait(5)
 
