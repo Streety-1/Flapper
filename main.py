@@ -1,10 +1,6 @@
 #------------------------------------IMPORTS------------------------------------#
 import os
-import subprocess
-import sys
-import urllib.request
 import time
-import requests
 from simple_term_menu import TerminalMenu
 
 #------------------------------------VALUES------------------------------------#
