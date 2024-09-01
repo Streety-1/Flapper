@@ -8,7 +8,7 @@ import time
 #------------------------------------VALUES------------------------------------#
 clear = lambda: os.system('cls')
 
-ScriptVersion = 'V1.0.1'
+ScriptVersion = 'V1.0.2'
 
 urltocheckwifi = "https://www.google.com/"
 
