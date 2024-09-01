@@ -11,11 +11,7 @@ from simple_term_menu import TerminalMenu
 clear = lambda: os.system('cls')
 
 ScriptVersion = 'V1.0.1'
-
-
 #-------------------Functions-------------------#
-def pipinstall(package):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", package], stdout=subprocess.DEVNULL)
 
 def systemCmd(command):
     os.system(command)
@@ -23,12 +19,7 @@ def systemCmd(command):
 def runPython(name):
     clear()
     exec(open(name).read())
-
-
-#------------------------------------INSTALLED IMPORTS------------------------------------#
-
-
-
+    
 #------------------------------------START------------------------------------#
 
 def Wifi():
