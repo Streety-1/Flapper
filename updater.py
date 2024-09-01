@@ -1,6 +1,11 @@
 # Download Latest version from github repo
 # https://github.com/Streety-1/Flapper-Nought.git
 
+
+urltocheckwifi = "https://www.google.com/"
+
+requiredmodules = {'requests', 'simple-term-menu'}
+
 #-------------------Prequisit Installer-------------------#
 
 try:
