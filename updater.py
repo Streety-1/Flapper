@@ -8,6 +8,9 @@ requiredmodules = {'requests', 'simple-term-menu'}
 
 #-------------------Prequisit Installer-------------------#
 
+def systemCmd(command):
+    os.system(command)
+
 def pipinstall(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package], stdout=subprocess.DEVNULL)
 
