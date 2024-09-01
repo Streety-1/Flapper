@@ -12,9 +12,6 @@ clear = lambda: os.system('cls')
 
 ScriptVersion = 'V1.0.1'
 
-urltocheckwifi = "https://www.google.com/"
-
-requiredmodules = {'requests', 'simple-term-menu'}
 
 #-------------------Functions-------------------#
 def pipinstall(package):
