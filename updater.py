@@ -1,6 +1,8 @@
 # Download Latest version from github repo
 # https://github.com/Streety-1/Flapper-Nought.git
 
+#run updater to launch script 
+
 import os
 import subprocess
 import sys
@@ -37,11 +39,9 @@ try:
 
     print("| Updating dbus |")
     systemCmd('sudo apt install python-dbus --quiet')
-    
-    
-    print("| Cloning |")
-    #get script from git and launch
-    
+
+    print("| Cloning repo for latest version |")
+    #get repo from git and run main
 
 except urllib.error.URLError:
     print("Error: No wifi connection")
