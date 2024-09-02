@@ -9,7 +9,7 @@ import sys
 import urllib.request
 import time
 
-urltocheckwifi = "https://www.google.com/"
+urltocheckwifi = "https://www.google.com/ "
 
 requiredmodules = {'simple-term-menu'}
 
