@@ -33,8 +33,6 @@ def main_menu():
  |_|  |_|\__,_|| .__/| .__/\___||_|  
                |_|   |_|                                       
     """)
-    print('\n'*2)
-
     print(b+'Please select an option: ')
 
     time.sleep(60)
