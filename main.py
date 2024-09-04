@@ -1,9 +1,14 @@
 #------------------------------------IMPORTS------------------------------------#
 import os
 import time
+import datetime
 
 #------------------------------------VALUES------------------------------------#
 clear = lambda: os.system('cls')
+
+timenow = datetime.datetime.now()
+
+b = '\033[1;34;40m Bright Blue'
 
 #------------------------------------GET VERSION------------------------------------#
 
@@ -26,8 +31,9 @@ def ap_scan():
     run_python('ap-scanner.py')
 
 def main_menu():
-    clear()
-    print("| Flapper Nought |")
+    print('\n' * 20)
+    print(b+"| Flapper Nought |")
+    print(timenow.strftime(b+"%m-%d %H:%M"))
     time.sleep(60)
 
 
