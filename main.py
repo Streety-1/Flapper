@@ -28,6 +28,8 @@ def ap_scan():
 def main_menu():
     clear()
     print("| Flapper Nought |")
+    time.sleep(60)
+
 
     #Menu
 
