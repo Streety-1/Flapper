@@ -7,9 +7,7 @@ clear = lambda: os.system('cls')
 
 #------------------------------------GET VERSION------------------------------------#
 
-with open("version.txt", "r") as file:
-    ver = file.read()
-    ScriptVersion = ver
+
 
 #-------------------Functions-------------------#
 
@@ -30,7 +28,6 @@ def ap_scan():
 def main_menu():
     clear()
     print("| Flapper Nought |")
-    print(ScriptVersion)
 
     #Menu
 
