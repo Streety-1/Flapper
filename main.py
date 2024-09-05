@@ -7,6 +7,7 @@ import subprocess
 import time
 import datetime
 import curses
+import RPi.GPIO as GPIO
 
 #------------------------------------VALUES------------------------------------#
 timenow = datetime.datetime.now()
@@ -22,9 +23,31 @@ def run_python(name):
     systemCmd("clear")
     exec(open(name).read())
 
+#------------------------------------Buttons------------------------------------#
+GPIO.setmode(GPIO.BCM)
+
+# Define GPIO pins connected to the buttons
+BUTTONA_PIN = 23  # Change to your button 1 GPIO pin
+BUTTONB_PIN = 24  # Change to your button 2 GPIO pin
+
+# Setup GPIO pins as input with pull-up resistors
+GPIO.setup(BUTTONA_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(BUTTONB_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+def buttona_callback(channel):
+    print("Button a pressed!")
+
+def buttonb_callback(channel):
+    print("Button b pressed!")
+
+# Add event detection for the buttons
+GPIO.add_event_detect(BUTTONA_PIN, GPIO.FALLING, callback=buttona_callback_callback, bouncetime=200)
+GPIO.add_event_detect(BUTTONB_PIN, GPIO.FALLING, callback=buttonb_callback_callback, bouncetime=200)
+
 #------------------------------------START------------------------------------#
 
-#def update():
+def update():
+    print("yo")
 
 def ap_scan():
     systemCmd("clear")
@@ -65,7 +88,6 @@ def main(stdscr):
 
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
-           # x = w // 2 - len(text) // 2
             x = 4
             y = h // 2 - len(menu) // 2 + idx - 2
             if idx == current_row:
@@ -87,23 +109,23 @@ def main(stdscr):
         elif key == curses.KEY_UP:
             current_row = (current_row - 1) % len(menu)
         elif key == ord('\n'):  # Enter key
-            stdscr.addstr(h // 2 + len(menu), w // 2 - len(f"You selected '{menu[current_row][0]}'") // 2, f"You selected '{menu[current_row][0]}'")
+            selection = menu[current_row][0]
+
+
+            if selection == Update:
+                update()
+
+
+
+            #stdscr.addstr(h // 2 + len(menu), w // 2 - len(f"You selected '{menu[current_row][0]}'") // 2, f"You selected '{menu[current_row][0]}'")
             stdscr.refresh()
             stdscr.getch()
         elif key == 27:  # ESC key to exit
             break
+            GPIO.cleanup()
 
 def main_menu():
     systemCmd("clear")
-    print(b+"""
-  ___  _                             
- | __|| | __ _  _ __  _ __  ___  _ _ 
- | _| | |/ _` || '_ \| '_ \/ -_)| '_|
- |_|  |_|\__,_|| .__/| .__/\___||_|  
-               |_|   |_|                                       
-    """)
-
-    curses.wrapper(main)
-
+    curses.wrapper(main) #launch main UI
 
 main_menu()
