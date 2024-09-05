@@ -42,7 +42,7 @@ def main(stdscr):
     stdscr.clear()
 
     # Custom text to display at the top
-    top_text = b+"""
+    top_text = """
   ___  _                             
  | __|| | __ _  _ __  _ __  ___  _ _ 
  | _| | |/ _` || '_ \| '_ \/ -_)| '_|
@@ -61,10 +61,15 @@ def main(stdscr):
     while True:
         stdscr.clear()
 
-        # Display the custom top text
-        stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
-
         h, w = stdscr.getmaxyx()
+
+        # Calculate the position for centered text
+        text_length = len(top_text)
+        x = (w // 2) - (text_length // 2)
+        y = 0
+
+        # Display the custom top text centered
+        stdscr.addstr(y, x, top_text, curses.A_BOLD | curses.color_pair(4))
 
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
