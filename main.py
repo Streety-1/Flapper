@@ -61,10 +61,10 @@ def main(stdscr):
     while True:
         stdscr.clear()
 
-        # Display the custom top text
-        stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
-
         h, w = stdscr.getmaxyx()
+
+        # Display the custom top text
+        stdscr.addstr(0, w // 2 - len(top_text) // 2, top_text, curses.A_BOLD | curses.color_pair(4))
 
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
