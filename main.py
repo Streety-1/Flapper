@@ -29,7 +29,6 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(23,GPIO.IN)
 GPIO.setup(24,GPIO.IN)
 
-
 #------------------------------------START------------------------------------#
 
 def update():
@@ -71,9 +70,9 @@ def main(stdscr):
     while True:
 
         #Buttons
-        if GPIO.input(23):
+        if not GPIO.input(23):
             print("23")
-        if GPIO.input(24):
+        if not GPIO.input(24):
             print("24")
 
         # Display the custom top text
