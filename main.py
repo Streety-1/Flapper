@@ -32,15 +32,20 @@ def ap_scan():
     run_python('ap-scanner.py')
 
 def main(stdscr):
+    curses.start_color()
+    curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
+    curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
+    curses.init_pair(3, curses.COLOR_BLUE, curses.COLOR_BLACK)
+    curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK)
+
     # Clear screen
     stdscr.clear()
-    curses.start_color()
-    curses.init_pair(3, curses.COLOR_BLUE, curses.COLOR_BLACK)
 
-    # List of menu options
+    # List of menu options with associated color pairs
     menu = [
-        ("AP scanner", 3),
-        ("Update", 3)
+        ("AP scanner", 2),
+        ("Update", 3),
+        ("Shutdown", 4)
     ]
     current_row = 0
 
@@ -49,15 +54,17 @@ def main(stdscr):
         h, w = stdscr.getmaxyx()
 
         # Display the menu
-        for idx, row in enumerate(menu):
-            x = w // 2 - len(row) // 2
+        for idx, (text, color_pair) in enumerate(menu):
+            x = w // 2 - len(text) // 2
             y = h // 2 - len(menu) // 2 + idx
             if idx == current_row:
-                stdscr.attron(curses.color_pair(1))
-                stdscr.addstr(y, x, row)
-                stdscr.attroff(curses.color_pair(1))
+                stdscr.attron(curses.color_pair(color_pair) | curses.A_REVERSE)
+                stdscr.addstr(y, x, text)
+                stdscr.attroff(curses.color_pair(color_pair) | curses.A_REVERSE)
             else:
-                stdscr.addstr(y, x, row)
+                stdscr.attron(curses.color_pair(color_pair))
+                stdscr.addstr(y, x, text)
+                stdscr.attroff(curses.color_pair(color_pair))
 
         stdscr.refresh()
 
@@ -69,7 +76,7 @@ def main(stdscr):
         elif key == curses.KEY_UP:
             current_row = (current_row - 1) % len(menu)
         elif key == ord('\n'):  # Enter key
-            stdscr.addstr(h // 2 + len(menu), w // 2 - len("You selected '{}'".format(menu[current_row])) // 2, "You selected '{}'".format(menu[current_row]))
+            stdscr.addstr(h // 2 + len(menu), w // 2 - len(f"You selected '{menu[current_row][0]}'") // 2, f"You selected '{menu[current_row][0]}'")
             stdscr.refresh()
             stdscr.getch()
         elif key == 27:  # ESC key to exit
