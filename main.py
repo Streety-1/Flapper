@@ -69,12 +69,6 @@ def main(stdscr):
 
     while True:
 
-        #Buttons
-        if not GPIO.input(23):
-            print("23")
-        if not GPIO.input(24):
-            print("24")
-
         # Display the custom top text
         stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
 
@@ -96,25 +90,21 @@ def main(stdscr):
         key = stdscr.getch()
 
         # Navigate the menu
-        if key == curses.KEY_DOWN:
-            current_row = (current_row + 1) % len(menu)
-        elif key == curses.KEY_UP:
-            current_row = (current_row - 1) % len(menu)
-        elif key == ord('\n'):  # Enter key
-            selection = menu[current_row][0]
 
+        #Buttons
+        if not GPIO.input(23):
+            #ENTER
+            selection = menu[current_row][0]
 
             if selection == Update:
                 update()
 
-
-
-            #stdscr.addstr(h // 2 + len(menu), w // 2 - len(f"You selected '{menu[current_row][0]}'") // 2, f"You selected '{menu[current_row][0]}'")
             stdscr.refresh()
             stdscr.getch()
-        elif key == 27:  # ESC key to exit
-            break
-            GPIO.cleanup()
+
+        if not GPIO.input(24): #DOWN
+            current_row = (current_row + 1) % len(menu)
+
 
 def main_menu():
     systemCmd("clear")
