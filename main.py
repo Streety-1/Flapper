@@ -26,29 +26,9 @@ def run_python(name):
 #------------------------------------Buttons------------------------------------#
 GPIO.setmode(GPIO.BCM)
 
-# Define GPIO pins connected to the button
-BUTTON1_PIN = 23  # Change to your button 1 GPIO pin
-BUTTON2_PIN = 24  # Change to your button 2 GPIO pin
+GPIO.setup(23,GPIO.IN)
+GPIO.setup(24,GPIO.IN)
 
-# Setup GPIO pins as input with pull-up resistors
-GPIO.setup(BUTTON1_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(BUTTON2_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
-# Define callback functions for button presses
-def button1_callback(channel):
-    print("Button 1 pressed!")
-
-def button2_callback(channel):
-    print("Button 2 pressed!")
-
-# Try to add edge detection
-try:
-    GPIO.add_event_detect(BUTTON1_PIN, GPIO.FALLING, callback=button1_callback, bouncetime=200)
-    GPIO.add_event_detect(BUTTON2_PIN, GPIO.FALLING, callback=button2_callback, bouncetime=200)
-except RuntimeError as e:
-    print(f"Error adding edge detection: {e}")
-    GPIO.cleanup()
-    exit()
 
 #------------------------------------START------------------------------------#
 
@@ -89,6 +69,13 @@ def main(stdscr):
     h, w = stdscr.getmaxyx()
 
     while True:
+
+        #Buttons
+        if GPIO.input(23):
+            print("23")
+        if GPIO.input(24):
+            print("24")
+
         # Display the custom top text
         stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
 
