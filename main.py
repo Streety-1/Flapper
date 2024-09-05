@@ -27,22 +27,28 @@ def run_python(name):
 GPIO.setmode(GPIO.BCM)
 
 # Define GPIO pins connected to the buttons
-BUTTONA_PIN = 23  # Change to your button 1 GPIO pin
-BUTTONB_PIN = 24  # Change to your button 2 GPIO pin
+BUTTON1_PIN = 23  # Change to your button 1 GPIO pin
+BUTTON2_PIN = 24  # Change to your button 2 GPIO pin
 
 # Setup GPIO pins as input with pull-up resistors
-GPIO.setup(BUTTONA_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(BUTTONB_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(BUTTON1_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(BUTTON2_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-def buttona_callback(channel):
-    print("Button a pressed!")
+# Define callback functions for button presses
+def button1_callback(channel):
+    print("Button 1 pressed!")
 
-def buttonb_callback(channel):
-    print("Button b pressed!")
+def button2_callback(channel):
+    print("Button 2 pressed!")
 
-# Add event detection for the buttons
-GPIO.add_event_detect(BUTTONA_PIN, GPIO.FALLING, callback=buttona_callback, bouncetime=200)
-GPIO.add_event_detect(BUTTONB_PIN, GPIO.FALLING, callback=buttonb_callback, bouncetime=200)
+# Try to add edge detection
+try:
+    GPIO.add_event_detect(BUTTON1_PIN, GPIO.FALLING, callback=button1_callback, bouncetime=200)
+    GPIO.add_event_detect(BUTTON2_PIN, GPIO.FALLING, callback=button2_callback, bouncetime=200)
+except RuntimeError as e:
+    print(f"Error adding edge detection: {e}")
+    GPIO.cleanup()
+    exit()
 
 #------------------------------------START------------------------------------#
 
