@@ -20,8 +20,6 @@ def run_python(name):
     systemCmd("clear")
     exec(open(name).read())
 
-systemCmd('sudo apt install python3-InquirerPy')
-
 from InquirerPy import inquirer
 from InquirerPy.base.control import Choice
 from InquirerPy.separator import Separator
