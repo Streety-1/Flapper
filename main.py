@@ -59,9 +59,6 @@ def main(stdscr):
 
     h, w = stdscr.getmaxyx()
 
-    margin = 5
-    v_offset = 3
-
     while True:
         # Display the custom top text
         stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
@@ -69,8 +66,8 @@ def main(stdscr):
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
            # x = w // 2 - len(text) // 2
-            x = 5
-            y = h // 2 - len(menu) // 2 + idx - 3
+            x = 4
+            y = h // 2 - len(menu) // 2 + idx - 2
             if idx == current_row:
                 stdscr.attron(curses.color_pair(color_pair) | curses.A_REVERSE)
                 stdscr.addstr(y, x, text)
