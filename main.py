@@ -32,11 +32,13 @@ def ap_scan():
     run_python('ap-scanner.py')
 
 def main(stdscr):
+    # Initialize curses
+    curses.curs_set(1)  # Hide the cursor
+    stdscr.nodelay(1)   # Make getch() non-blocking
+    stdscr.timeout(100) # Refresh screen every 100 milliseconds
+
     curses.start_color()
     curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK)
-
-    # Clear screen
-    stdscr.clear()
 
     # Custom text to display at the top
     top_text = """
@@ -55,19 +57,20 @@ def main(stdscr):
     ]
     current_row = 0
 
-    while True:
-        stdscr.clear()
+    h, w = stdscr.getmaxyx()
 
+    margin = 5
+    v_offset = 3
+
+    while True:
         # Display the custom top text
         stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
-
-        h, w = stdscr.getmaxyx()
 
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
            # x = w // 2 - len(text) // 2
             x = 5
-            y = h // 2 - len(menu) // 2 + idx - 5
+            y = h // 2 - len(menu) // 2 + idx - 3
             if idx == current_row:
                 stdscr.attron(curses.color_pair(color_pair) | curses.A_REVERSE)
                 stdscr.addstr(y, x, text)
