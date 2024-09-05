@@ -33,9 +33,6 @@ def ap_scan():
 
 def main(stdscr):
     curses.start_color()
-    curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
-    curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
-    curses.init_pair(3, curses.COLOR_BLUE, curses.COLOR_BLACK)
     curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK)
 
     # Clear screen
@@ -52,7 +49,7 @@ def main(stdscr):
 
     # List of menu options with associated color pairs
     menu = [
-        ("AP scanner", 1),
+        ("AP scanner", 4),
         ("Update", 4),
         ("Shutdown", 4)
     ]
@@ -70,7 +67,7 @@ def main(stdscr):
         for idx, (text, color_pair) in enumerate(menu):
            # x = w // 2 - len(text) // 2
             x = 5
-            y = h // 2 - len(menu) // 2 + idx
+            y = h // 2 - len(menu) // 2 + idx - 5
             if idx == current_row:
                 stdscr.attron(curses.color_pair(color_pair) | curses.A_REVERSE)
                 stdscr.addstr(y, x, text)
