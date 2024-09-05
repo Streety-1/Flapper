@@ -26,7 +26,7 @@ def run_python(name):
 #------------------------------------Buttons------------------------------------#
 GPIO.setmode(GPIO.BCM)
 
-# Define GPIO pins connected to the buttons
+# Define GPIO pins connected to the button
 BUTTON1_PIN = 23  # Change to your button 1 GPIO pin
 BUTTON2_PIN = 24  # Change to your button 2 GPIO pin
 
