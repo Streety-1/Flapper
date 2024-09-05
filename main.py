@@ -91,9 +91,12 @@ def main(stdscr):
 
         # Navigate the menu
 
-        #Buttons
-        if not GPIO.input(23):
-            #ENTER
+        #ADD DEBOUNCE TO BUTTON CLICKS
+
+        def down():
+            current_row = (current_row + 1) % len(menu)
+
+        def enter():
             selection = menu[current_row][0]
 
             if selection == Update:
@@ -102,8 +105,11 @@ def main(stdscr):
             stdscr.refresh()
             stdscr.getch()
 
-        if not GPIO.input(24): #DOWN
-            current_row = (current_row + 1) % len(menu)
+        #Button clicks
+        if not GPIO.input(23):
+            enter()
+        if not GPIO.input(24):
+            down()
 
 
 def main_menu():
