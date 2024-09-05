@@ -41,8 +41,8 @@ def buttonb_callback(channel):
     print("Button b pressed!")
 
 # Add event detection for the buttons
-GPIO.add_event_detect(BUTTONA_PIN, GPIO.FALLING, callback=buttona_callback_callback, bouncetime=200)
-GPIO.add_event_detect(BUTTONB_PIN, GPIO.FALLING, callback=buttonb_callback_callback, bouncetime=200)
+GPIO.add_event_detect(BUTTONA_PIN, GPIO.FALLING, callback=buttona_callback, bouncetime=200)
+GPIO.add_event_detect(BUTTONB_PIN, GPIO.FALLING, callback=buttonb_callback, bouncetime=200)
 
 #------------------------------------START------------------------------------#
 
