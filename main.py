@@ -34,9 +34,14 @@ def ap_scan():
 def main(stdscr):
     # Clear screen
     stdscr.clear()
+    curses.start_color()
+    curses.init_pair(3, curses.COLOR_BLUE, curses.COLOR_BLACK)
 
     # List of menu options
-    menu = ["Option 1", "Option 2", "Option 3", "Option 4"]
+    menu = [
+        ("AP scanner", 3),
+        ("Update", 3)
+    ]
     current_row = 0
 
     while True:
