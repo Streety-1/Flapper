@@ -14,6 +14,7 @@ timenow = datetime.datetime.now()
 
 b = '\033[1;34;40m'
 
+global last_press_time
 last_press_time = 0
 debounce_delay = 0.5  # 500 milliseconds
 
