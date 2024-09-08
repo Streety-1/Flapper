@@ -14,7 +14,6 @@ timenow = datetime.datetime.now()
 
 b = '\033[1;34;40m'
 
-global last_press_time
 last_press_time = 0
 debounce_delay = 0.5  # 500 milliseconds
 
@@ -75,7 +74,7 @@ def main(stdscr):
     h, w = stdscr.getmaxyx()
 
     while True:
-
+        global last_press_time
         current_time = time.time()
 
         # Display the custom top text
@@ -118,6 +117,7 @@ def main(stdscr):
                 last_press_time = current_time
                 current_row = (current_row + 1) % len(menu)
 
+        time.sleep(0.1)  # Small delay to prevent high CPU usage
 
 def main_menu():
     systemCmd("clear")
