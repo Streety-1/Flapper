@@ -14,6 +14,9 @@ timenow = datetime.datetime.now()
 
 b = '\033[1;34;40m'
 
+last_press_time = 0
+debounce_delay = 0.5  # 500 milliseconds
+
 #-------------------Functions-------------------#
 
 def systemCmd(command):
@@ -33,6 +36,9 @@ GPIO.setup(24,GPIO.IN)
 
 def update():
     print("yo")
+
+def shutdown():
+    systemCmd('sudo shutdown -h now')
 
 def ap_scan():
     systemCmd("clear")
@@ -69,6 +75,8 @@ def main(stdscr):
 
     while True:
 
+        current_time = time.time()
+
         # Display the custom top text
         stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
 
@@ -90,20 +98,24 @@ def main(stdscr):
         key = stdscr.getch()
 
         # Navigate the menu
-
-        #ADD DEBOUNCE TO BUTTON CLICKS
-
-        #Button clicks
         if not GPIO.input(23):
-            selection = menu[current_row][0]
+            if current_time - last_press_time >= debounce_delay:
+                last_press_time = current_time
 
-            if selection == Update:
-                update()
+                selection = menu[current_row][0]
 
-            stdscr.refresh()
-            stdscr.getch()
+                if 'Update' in selection:
+                    update()
+                elif 'Shutdown' in selection:
+                    shutdown()
+
+                stdscr.refresh()
+                stdscr.getch()
+
         if not GPIO.input(24):
-            current_row = (current_row + 1) % len(menu)
+            if current_time - last_press_time >= debounce_delay:
+                last_press_time = current_time
+                current_row = (current_row + 1) % len(menu)
 
 
 def main_menu():
