@@ -16,6 +16,7 @@ b = '\033[1;34;40m'
 
 last_press_time = 0
 debounce_delay = 0.5  # 500 milliseconds
+button_press_start_time = None # Variable to track when the button press started
 
 #-------------------Functions-------------------#
 
@@ -74,6 +75,7 @@ def main(stdscr):
     h, w = stdscr.getmaxyx()
 
     while True:
+        global button_press_start_time
         global last_press_time
         current_time = time.time()
 
@@ -98,21 +100,35 @@ def main(stdscr):
         key = stdscr.getch()
 
         # Navigate the menu
-        if not GPIO.input(23):
+        if not GPIO.input(23): # top button
             if current_time - last_press_time >= debounce_delay:
                 last_press_time = current_time
 
-                selection = menu[current_row][0]
+                # check for hold
+                if button_press_start_time is None:
+                    # Record the time when button is first pressed
+                    button_press_start_time = time.time()
+                else:
+                    # Check if the button has been held long enough
+                    if time.time() - button_press_start_time >= debounce_delay:
+                        # Perform the action for a long press here
+                        # Select option
+                        selection = menu[current_row][0]
+                        if 'Update' in selection:
+                            update()
+                        elif 'Shutdown' in selection:
+                            shutdown()
 
-                if 'Update' in selection:
-                    update()
-                elif 'Shutdown' in selection:
-                    shutdown()
+                        stdscr.refresh()
+                        stdscr.getch()
+                        button_press_start_time = None  # Reset the start time
+        else:
+            if current_time - last_press_time >= debounce_delay:
+                last_press_time = current_time
+                current_row = (current_row + -1) % len(menu)
+            button_press_start_time = None  # Reset the start time if the button is released
 
-                stdscr.refresh()
-                stdscr.getch()
-
-        if not GPIO.input(24):
+        if not GPIO.input(24): # bottom button
             if current_time - last_press_time >= debounce_delay:
                 last_press_time = current_time
                 current_row = (current_row + 1) % len(menu)
@@ -121,6 +137,6 @@ def main(stdscr):
 
 def main_menu():
     systemCmd("clear")
-    curses.wrapper(main) #launch main UI
+    curses.wrapper(main) # launch main UI
 
 main_menu()
