@@ -17,6 +17,7 @@ b = '\033[1;34;40m'
 last_press_time = 0
 debounce_delay = 0.5  # 500 milliseconds
 button_press_start_time = None # Variable to track when the button press started
+long_hold_duration = 0.5
 
 #-------------------Functions-------------------#
 
@@ -77,6 +78,7 @@ def main(stdscr):
     while True:
         global button_press_start_time
         global last_press_time
+        global long_hold_duration
         current_time = time.time()
 
         # Display the custom top text
@@ -110,10 +112,12 @@ def main(stdscr):
                     button_press_start_time = time.time()
                 else:
                     # Check if the button has been held long enough
-                    if time.time() - button_press_start_time >= debounce_delay:
+                    if time.time() - button_press_start_time >= long_hold_duration:
                         # Perform the action for a long press here
+
                         # Select option
                         selection = menu[current_row][0]
+
                         if 'Update' in selection:
                             update()
                         elif 'Shutdown' in selection:
@@ -123,10 +127,15 @@ def main(stdscr):
                         stdscr.getch()
                         button_press_start_time = None  # Reset the start time
         else:
-            if current_time - last_press_time >= debounce_delay:
-                last_press_time = current_time
-                current_row = (current_row + -1) % len(menu)
-            button_press_start_time = None  # Reset the start time if the button is released
+            if button_press_start_time is not None:
+                # The button was pressed but is now released
+                press_duration = time.time() - button_press_start_time
+                if press_duration < long_hold_duration:
+                    # short click
+                    last_press_time = current_time
+                    current_row = (current_row + -1) % len(menu)
+                # Reset the start time
+                button_press_start_time = None
 
         if not GPIO.input(24): # bottom button
             if current_time - last_press_time >= debounce_delay:
