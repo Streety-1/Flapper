@@ -48,6 +48,8 @@ def ap_scan():
     run_python('ap-scanner.py')
 
 def main(stdscr):
+    systemCmd("clear")
+
     # Initialize curses
     curses.curs_set(1)  # Hide the cursor
     stdscr.nodelay(1)   # Make getch() non-blocking
@@ -89,11 +91,11 @@ def main(stdscr):
             y = h // 2 - len(menu) // 2 + idx - 2
             if idx == current_row: #when selected reverse colors
                 stdscr.attron(curses.color_pair(color_pair) | curses.A_REVERSE)
-                stdscr.addstr(y, x, text, curses.A_BOLD) | curses.color_pair(color_pair)
+                stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(color_pair))
                 stdscr.attroff(curses.color_pair(color_pair) | curses.A_REVERSE)
             else: #not selected use default color
                 stdscr.attron(curses.color_pair(color_pair))
-                stdscr.addstr(y, x, text, curses.A_BOLD) | curses.color_pair(color_pair)
+                stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(color_pair))
                 stdscr.attroff(curses.color_pair(color_pair))
 
         stdscr.refresh()
@@ -141,5 +143,7 @@ def main(stdscr):
 
         time.sleep(0.1)  # Small delay to prevent high CPU usage
 
-systemCmd("clear")
+
+
+#Start Main menu
 curses.wrapper(main)
