@@ -51,12 +51,12 @@ def main(stdscr):
     systemCmd("clear")
 
     # Initialize curses
-    curses.curs_set(1)  # Hide the cursor
+    curses.curs_set(0)  # Hide the cursor
     stdscr.nodelay(1)   # Make getch() non-blocking
     stdscr.timeout(100) # Refresh screen every 100 milliseconds
     curses.start_color()
     curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK)
-    curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_YELLOW)
+    curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_YELLOW)
 
     # Custom text to display at the top
     top_text = """
@@ -69,8 +69,8 @@ def main(stdscr):
 
     # List of menu options with associated color pairs
     menu = [
-        ("Update"),
-        ("test")
+        ("UPDATE"),
+        ("TEST")
     ]
     current_row = 0
 
@@ -90,9 +90,9 @@ def main(stdscr):
             x = 4
             y = h // 2 - len(menu) // 2 + idx - 2
             if idx == current_row: #when selected
-                stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(4))
-            else: #not selected
                 stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(3))
+            else: #not selected
+                stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(4))
 
         stdscr.refresh()
 
