@@ -68,13 +68,9 @@ def main(stdscr):
 
     # List of menu options with associated color pairs
     menu = [
-        ("AP scanner", 4),
-        ("Update", 4),
-        ("Shutdown", 4)
+        ("Update", 4)
     ]
     current_row = 0
-
-    print("menu options")
 
     h, w = stdscr.getmaxyx()
 
@@ -104,8 +100,6 @@ def main(stdscr):
 
         key = stdscr.getch()
 
-        print("displayed menu")
-
         # Navigate the menu
         if not GPIO.input(23): # top button click
             print("top button")
@@ -118,7 +112,6 @@ def main(stdscr):
                     # Record the time when button is first pressed
                     button_press_start_time = time.time()
                 else:
-                    # Check if the button has been held long enough
                     if time.time() - button_press_start_time >= long_hold_duration:
                         # Perform the action for a long press here
 
