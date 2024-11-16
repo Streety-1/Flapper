@@ -72,8 +72,6 @@ def main(stdscr):
 
     ip_address = get_ip_address()
 
-    piIP = commands.getoutput('hostname -I')
-
     # List of menu options with associated color pairs
     menu = [
         ("AP scanner", 4),
