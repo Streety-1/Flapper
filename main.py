@@ -37,6 +37,7 @@ GPIO.setup(24,GPIO.IN)
 
 def update():
     print("yo")
+    #run FlapperUpdater.py again
 
 def shutdown():
     systemCmd('sudo shutdown -h now')
@@ -70,7 +71,7 @@ def main(stdscr):
     menu = [
         ("Update", 4)
     ]
-    current_row = 1
+    current_row = 0
 
     h, w = stdscr.getmaxyx()
 
@@ -85,15 +86,18 @@ def main(stdscr):
 
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
+            print(idx)
+            print(current_row)
             x = 4
             y = h // 2 - len(menu) // 2 + idx - 2
-            stdscr.addstr(y, x, text, curses.A_BOLD)
             if idx == current_row:
-                stdscr.attron(curses.color_pair(color_pair) | curses.A_REVERSE)
-                stdscr.attroff(curses.color_pair(color_pair) | curses.A_REVERSE)
+                stdscr.attron(curses.color_pair(4) | curses.A_REVERSE)
+                stdscr.addstr(y, x, text, curses.A_BOLD)
+                stdscr.attroff(curses.color_pair(4) | curses.A_REVERSE)
             else:
-                stdscr.attron(curses.color_pair(color_pair))
-                stdscr.attroff(curses.color_pair(color_pair))
+                stdscr.attron(curses.color_pair(4))
+                stdscr.addstr(y, x, text, curses.A_BOLD)
+                stdscr.attroff(curses.color_pair(4))
 
         stdscr.refresh()
 
