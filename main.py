@@ -22,9 +22,9 @@ debounce_delay = 0.5  # 500 milliseconds
 def systemCmd(command):
     os.system(command)
 
-def run_python(name):
+def run_python(path):
     systemCmd("clear")
-    exec(open(name).read())
+    exec(open(path).read())
 
 #------------------------------------Buttons------------------------------------#
 GPIO.setmode(GPIO.BCM)
@@ -34,15 +34,12 @@ GPIO.setup(24,GPIO.IN)
 #------------------------------------START------------------------------------#
 
 def update():
-    print("run update")
-    #run FlapperUpdater.py again
+    run_pyhthon('/flappernought/FlapperUpdater.py')
 
 def shutdown():
     systemCmd('sudo shutdown -h now')
 
 def ap_scan():
-    systemCmd("clear")
-    time.sleep(2)
     run_python('ap-scanner.py')
 
 def main(stdscr):
@@ -58,8 +55,6 @@ def main(stdscr):
 
     # Custom text to display at the top
     top_text = """
-+ select
-- navigate
   ___  _                             
  | __|| | __ _  _ __  _ __  ___  _ _ 
  | _| | |/ _` || '_ \| '_ \/ -_)| '_|
@@ -101,7 +96,6 @@ def main(stdscr):
 
                 # Select option
                 selection = menu[current_row][0]
-                print(selection)
 
                 if 'U' in selection:
                     update()
