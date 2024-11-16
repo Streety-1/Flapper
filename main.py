@@ -53,11 +53,6 @@ def main(stdscr):
     stdscr.nodelay(1)   # Make getch() non-blocking
     stdscr.timeout(100) # Refresh screen every 100 milliseconds
 
-    curses.start_color()
-    curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK)
-
-    print("Initialized curses")
-
     # Custom text to display at the top
     top_text = """
   ___  _                             
@@ -75,6 +70,9 @@ def main(stdscr):
 
     h, w = stdscr.getmaxyx()
 
+    curses.start_color()
+    curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK)
+
     while True:
         global button_press_start_time
         global last_press_time
@@ -89,7 +87,6 @@ def main(stdscr):
             x = 4
             y = h // 2 - len(menu) // 2 + idx - 2
             if idx == current_row: #when selected reverse colors
-                print("idx == current_row")
                 stdscr.attron(curses.color_pair(color_pair) | curses.A_REVERSE)
                 stdscr.addstr(y, x, text, curses.A_BOLD)
                 stdscr.attroff(curses.color_pair(color_pair) | curses.A_REVERSE)
