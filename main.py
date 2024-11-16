@@ -36,7 +36,7 @@ GPIO.setup(24,GPIO.IN)
 #------------------------------------START------------------------------------#
 
 def update():
-    print("yo")
+    print("run update")
     #run FlapperUpdater.py again
 
 def shutdown():
@@ -64,7 +64,8 @@ def main(stdscr):
 
     # List of menu options with associated color pairs
     menu = [
-        ("Update", 4)
+        ("Update", 4),
+        ("test", 4)
     ]
     current_row = 0
 
@@ -99,7 +100,6 @@ def main(stdscr):
 
         # Navigate the menu
         if not GPIO.input(23): # top button click
-            print(current_row)
 
             if current_time - last_press_time >= debounce_delay:
                 last_press_time = current_time
@@ -138,7 +138,6 @@ def main(stdscr):
             if current_time - last_press_time >= debounce_delay:
                 last_press_time = current_time
                 current_row = (current_row + 1) % len(menu)
-                print(current_row)
 
         time.sleep(0.1)  # Small delay to prevent high CPU usage
 
