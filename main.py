@@ -85,15 +85,15 @@ def main(stdscr):
 
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
+            print("dis")
             x = 4
             y = h // 2 - len(menu) // 2 + idx - 2
+            stdscr.addstr(y, x, text, curses.A_BOLD)
             if idx == current_row:
                 stdscr.attron(curses.color_pair(color_pair) | curses.A_REVERSE)
-                stdscr.addstr(y, x, text, curses.A_BOLD)
                 stdscr.attroff(curses.color_pair(color_pair) | curses.A_REVERSE)
             else:
                 stdscr.attron(curses.color_pair(color_pair))
-                stdscr.addstr(y, x, text, curses.A_BOLD)
                 stdscr.attroff(curses.color_pair(color_pair))
 
         stdscr.refresh()
@@ -102,7 +102,7 @@ def main(stdscr):
 
         # Navigate the menu
         if not GPIO.input(23): # top button click
-            print("top button")
+            print(current_row)
 
             if current_time - last_press_time >= debounce_delay:
                 last_press_time = current_time
@@ -138,10 +138,10 @@ def main(stdscr):
                 button_press_start_time = None
 
         if not GPIO.input(24): # bottom button click
-            print("bottom button")
             if current_time - last_press_time >= debounce_delay:
                 last_press_time = current_time
                 current_row = (current_row + 1) % len(menu)
+                print(current_row)
 
         time.sleep(0.1)  # Small delay to prevent high CPU usage
 
