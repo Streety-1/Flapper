@@ -8,8 +8,7 @@ import time
 import datetime
 import curses
 import RPi.GPIO as GPIO
-import commands
-
+import socket
 #------------------------------------VALUES------------------------------------#
 timenow = datetime.datetime.now()
 
@@ -28,6 +27,11 @@ def systemCmd(command):
 def run_python(name):
     systemCmd("clear")
     exec(open(name).read())
+
+def get_ip_address():
+    # Get the local IP address of the Raspberry Pi (on the same network)
+    ip_address = socket.gethostbyname(socket.gethostname())
+    return ip_address
 
 #------------------------------------Buttons------------------------------------#
 GPIO.setmode(GPIO.BCM)
@@ -66,8 +70,9 @@ def main(stdscr):
                |_|   |_|                                       
     """
 
+    ip_address = get_ip_address()
+
     piIP = commands.getoutput('hostname -I')
-    wiName = subprocess.check_output(['iwgetid -r'], shell=True)
 
     # List of menu options with associated color pairs
     menu = [
@@ -88,9 +93,8 @@ def main(stdscr):
         # Display the custom top text
         stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
 
-        #IP AND WIFI NAME
-        stdscr.addstr(0, 0, piIP, curses.A_BOLD | curses.color_pair(4))
-        stdscr.addstr(0, 0, wiName, curses.A_BOLD | curses.color_pair(4))
+        #IP
+        stdscr.addstr(4, 0, f"IP Address: {ip_address}", curses.A_BOLD | curses.color_pair(4))
 
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
