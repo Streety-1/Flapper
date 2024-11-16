@@ -8,6 +8,7 @@ import time
 import datetime
 import curses
 import RPi.GPIO as GPIO
+import commands
 
 #------------------------------------VALUES------------------------------------#
 timenow = datetime.datetime.now()
@@ -65,13 +66,16 @@ def main(stdscr):
                |_|   |_|                                       
     """
 
+    piIP = commands.getoutput('hostname -I')
+    wiName = subprocess.check_output(['iwgetid -r'], shell=True)
+
     # List of menu options with associated color pairs
     menu = [
         ("AP scanner", 4),
         ("Update", 4),
         ("Shutdown", 4)
     ]
-    current_row = 0
+    current_row = 1
 
     h, w = stdscr.getmaxyx()
 
@@ -83,6 +87,10 @@ def main(stdscr):
 
         # Display the custom top text
         stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
+
+        #IP AND WIFI NAME
+        stdscr.addstr(0, 0, piIP, curses.A_BOLD | curses.color_pair(4))
+        stdscr.addstr(0, 0, wiName, curses.A_BOLD | curses.color_pair(4))
 
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
