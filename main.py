@@ -70,7 +70,7 @@ def main(stdscr):
     menu = [
         ("Update", 4)
     ]
-    current_row = 0
+    current_row = 1
 
     h, w = stdscr.getmaxyx()
 
@@ -96,8 +96,6 @@ def main(stdscr):
                 stdscr.attroff(curses.color_pair(color_pair))
 
         stdscr.refresh()
-
-        key = stdscr.getch()
 
         # Navigate the menu
         if not GPIO.input(23): # top button click
