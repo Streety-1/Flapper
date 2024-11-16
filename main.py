@@ -89,11 +89,11 @@ def main(stdscr):
             y = h // 2 - len(menu) // 2 + idx - 2
             if idx == current_row: #when selected reverse colors
                 stdscr.attron(curses.color_pair(color_pair) | curses.A_REVERSE)
-                stdscr.addstr(y, x, text, curses.A_BOLD)
+                stdscr.addstr(y, x, text, curses.A_BOLD) | curses.color_pair(color_pair)
                 stdscr.attroff(curses.color_pair(color_pair) | curses.A_REVERSE)
             else: #not selected use default color
                 stdscr.attron(curses.color_pair(color_pair))
-                stdscr.addstr(y, x, text, curses.A_BOLD)
+                stdscr.addstr(y, x, text, curses.A_BOLD) | curses.color_pair(color_pair)
                 stdscr.attroff(curses.color_pair(color_pair))
 
         stdscr.refresh()
