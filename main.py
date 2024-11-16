@@ -16,8 +16,6 @@ b = '\033[1;34;40m'
 
 last_press_time = 0
 debounce_delay = 0.5  # 500 milliseconds
-button_press_start_time = None # Variable to track when the button press started
-long_hold_duration = 0.5
 
 #-------------------Functions-------------------#
 
@@ -60,8 +58,8 @@ def main(stdscr):
 
     # Custom text to display at the top
     top_text = """
-+ select option
-- navigate menu
++ select
+- navigate
      
   ___  _                             
  | __|| | __ _  _ __  _ __  ___  _ _ 
@@ -80,9 +78,7 @@ def main(stdscr):
     h, w = stdscr.getmaxyx()
 
     while True:
-        global button_press_start_time
         global last_press_time
-        global long_hold_duration
         current_time = time.time()
 
         # Display the custom top text
@@ -91,7 +87,7 @@ def main(stdscr):
         # Display the menu
         for idx, (text) in enumerate(menu):
             x = 4
-            y = h // 2 - len(menu) // 2 + idx - 2
+            y = h // 4 - len(menu) // 4 + idx - 4
             if idx == current_row: #selected
                 stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(3))
             else: #not selected
@@ -106,6 +102,7 @@ def main(stdscr):
 
                 # Select option
                 selection = menu[current_row][0]
+                print(selection)
 
                 if 'Update' in selection:
                     update()
