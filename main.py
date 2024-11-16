@@ -69,8 +69,8 @@ def main(stdscr):
 
     # List of menu options with associated color pairs
     menu = [
-        ("UPDATE"),
-        ("TEST")
+        ("Update"),
+        ("Shutdown")
     ]
     current_row = 0
 
@@ -89,7 +89,7 @@ def main(stdscr):
         for idx, (text) in enumerate(menu):
             x = 4
             y = h // 2 - len(menu) // 2 + idx - 2
-            if idx == current_row: #when selected
+            if idx == current_row: #selected
                 stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(3))
             else: #not selected
                 stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(4))
