@@ -28,17 +28,11 @@ def run_python(name):
     systemCmd("clear")
     exec(open(name).read())
 
-def get_ip_address():
-    # Get the local IP address of the Raspberry Pi (on the same network)
-    ip_address = socket.gethostbyname(socket.gethostname())
-    return ip_address
-
 #------------------------------------Buttons------------------------------------#
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(23,GPIO.IN)
 GPIO.setup(24,GPIO.IN)
-
 #------------------------------------START------------------------------------#
 
 def update():
@@ -56,10 +50,12 @@ def main(stdscr):
     # Initialize curses
     curses.curs_set(1)  # Hide the cursor
     stdscr.nodelay(1)   # Make getch() non-blocking
-    stdscr.timeout(1000) # Refresh screen every second
+    stdscr.timeout(100) # Refresh screen every 100 milliseconds
 
     curses.start_color()
     curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK)
+
+    print("Initialized curses")
 
     # Custom text to display at the top
     top_text = """
@@ -70,15 +66,15 @@ def main(stdscr):
                |_|   |_|                                       
     """
 
-    ip_address = get_ip_address()
-
     # List of menu options with associated color pairs
     menu = [
         ("AP scanner", 4),
         ("Update", 4),
         ("Shutdown", 4)
     ]
-    current_row = 1
+    current_row = 0
+
+    print("menu options")
 
     h, w = stdscr.getmaxyx()
 
@@ -87,9 +83,6 @@ def main(stdscr):
         global last_press_time
         global long_hold_duration
         current_time = time.time()
-
-        #IP
-        stdscr.addstr(0, 0, f"IP Address: {ip_address}", curses.A_BOLD | curses.color_pair(4))
 
         # Display the custom top text
         stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
@@ -110,6 +103,8 @@ def main(stdscr):
         stdscr.refresh()
 
         key = stdscr.getch()
+
+        print("displayed menu")
 
         # Navigate the menu
         if not GPIO.input(23): # top button click
