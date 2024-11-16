@@ -60,6 +60,9 @@ def main(stdscr):
 
     # Custom text to display at the top
     top_text = """
++ select option
+- navigate menu
+     
   ___  _                             
  | __|| | __ _  _ __  _ __  ___  _ _ 
  | _| | |/ _` || '_ \| '_ \/ -_)| '_|
@@ -97,42 +100,20 @@ def main(stdscr):
         stdscr.refresh()
 
         # Navigate the menu
-        if not GPIO.input(23): # top button click
-
+        if not GPIO.input(23): # top button click SELECT
             if current_time - last_press_time >= debounce_delay:
                 last_press_time = current_time
 
-                # check for hold
-                if button_press_start_time is None:
-                    # Record the time when button is first pressed
-                    button_press_start_time = time.time()
-                else:
-                    if time.time() - button_press_start_time >= long_hold_duration:
-                        # Perform the action for a long press here
+                # Select option
+                selection = menu[current_row][0]
 
-                        # Select option
-                        selection = menu[current_row][0]
+                if 'Update' in selection:
+                    update()
+                elif 'Shutdown' in selection:
+                    shutdown()
 
-                        if 'Update' in selection:
-                            update()
-                        elif 'Shutdown' in selection:
-                            shutdown()
 
-                        stdscr.refresh()
-                        stdscr.getch()
-                        button_press_start_time = None  # Reset the start time
-        else:
-            if button_press_start_time is not None:
-                # The button was pressed but is now released
-                press_duration = time.time() - button_press_start_time
-                if press_duration < long_hold_duration:
-                    # short click
-                    last_press_time = current_time
-                    current_row = (current_row - 1) % len(menu)
-                # Reset the start time
-                button_press_start_time = None
-
-        if not GPIO.input(24): # bottom button click
+        if not GPIO.input(24): #navigate menu
             if current_time - last_press_time >= debounce_delay:
                 last_press_time = current_time
                 current_row = (current_row + 1) % len(menu)
