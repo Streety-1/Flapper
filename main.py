@@ -54,6 +54,9 @@ def main(stdscr):
     curses.curs_set(1)  # Hide the cursor
     stdscr.nodelay(1)   # Make getch() non-blocking
     stdscr.timeout(100) # Refresh screen every 100 milliseconds
+    curses.start_color()
+    curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK)
+    curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_YELLOW)
 
     # Custom text to display at the top
     top_text = """
@@ -66,15 +69,12 @@ def main(stdscr):
 
     # List of menu options with associated color pairs
     menu = [
-        ("Update", 4),
-        ("test", 4)
+        ("Update"),
+        ("test")
     ]
     current_row = 0
 
     h, w = stdscr.getmaxyx()
-
-    curses.start_color()
-    curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK)
 
     while True:
         global button_press_start_time
@@ -86,17 +86,13 @@ def main(stdscr):
         stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
 
         # Display the menu
-        for idx, (text, color_pair) in enumerate(menu):
+        for idx, (text) in enumerate(menu):
             x = 4
             y = h // 2 - len(menu) // 2 + idx - 2
-            if idx == current_row: #when selected reverse colors
-                stdscr.attron(curses.color_pair(color_pair) | curses.A_REVERSE)
-                stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(color_pair))
-                stdscr.attroff(curses.color_pair(color_pair) | curses.A_REVERSE)
-            else: #not selected use default color
-                stdscr.attron(curses.color_pair(color_pair))
-                stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(color_pair))
-                stdscr.attroff(curses.color_pair(color_pair))
+            if idx == current_row: #when selected
+                stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(4))
+            else: #not selected
+                stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(3))
 
         stdscr.refresh()
 
