@@ -34,7 +34,7 @@ GPIO.setup(24,GPIO.IN)
 #------------------------------------START------------------------------------#
 
 def update():
-    run_pyhthon('/flappernought/FlapperUpdater.py')
+    run_python('/flappernought/FlapperUpdater.py')
 
 def shutdown():
     systemCmd('sudo shutdown -h now')
