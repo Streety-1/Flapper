@@ -85,7 +85,6 @@ def main(stdscr):
 
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
-            print("dis")
             x = 4
             y = h // 2 - len(menu) // 2 + idx - 2
             stdscr.addstr(y, x, text, curses.A_BOLD)
