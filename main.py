@@ -60,7 +60,6 @@ def main(stdscr):
     top_text = """
 + select
 - navigate
-     
   ___  _                             
  | __|| | __ _  _ __  _ __  ___  _ _ 
  | _| | |/ _` || '_ \| '_ \/ -_)| '_|
@@ -87,7 +86,7 @@ def main(stdscr):
         # Display the menu
         for idx, (text) in enumerate(menu):
             x = 4
-            y = h // 4 - len(menu) // 4 + idx - 4
+            y = h // 2 - len(menu) // 2 + idx - 2
             if idx == current_row: #selected
                 stdscr.addstr(y, x, text, curses.A_BOLD | curses.color_pair(3))
             else: #not selected
@@ -104,9 +103,9 @@ def main(stdscr):
                 selection = menu[current_row][0]
                 print(selection)
 
-                if 'Update' in selection:
+                if 'U' in selection:
                     update()
-                elif 'Shutdown' in selection:
+                elif 'S' in selection:
                     shutdown()
 
 
