@@ -56,7 +56,7 @@ def main(stdscr):
     # Initialize curses
     curses.curs_set(1)  # Hide the cursor
     stdscr.nodelay(1)   # Make getch() non-blocking
-    stdscr.timeout(100) # Refresh screen every 100 milliseconds
+    stdscr.timeout(1000) # Refresh screen every second
 
     curses.start_color()
     curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK)
@@ -88,11 +88,11 @@ def main(stdscr):
         global long_hold_duration
         current_time = time.time()
 
+        #IP
+        stdscr.addstr(0, 0, f"IP Address: {ip_address}", curses.A_BOLD | curses.color_pair(4))
+
         # Display the custom top text
         stdscr.addstr(0, 0, top_text, curses.A_BOLD | curses.color_pair(4))
-
-        #IP
-        stdscr.addstr(4, 0, f"IP Address: {ip_address}", curses.A_BOLD | curses.color_pair(4))
 
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
@@ -112,7 +112,9 @@ def main(stdscr):
         key = stdscr.getch()
 
         # Navigate the menu
-        if not GPIO.input(23): # top button
+        if not GPIO.input(23): # top button click
+            print("top button")
+
             if current_time - last_press_time >= debounce_delay:
                 last_press_time = current_time
 
@@ -147,15 +149,13 @@ def main(stdscr):
                 # Reset the start time
                 button_press_start_time = None
 
-        if not GPIO.input(24): # bottom button
+        if not GPIO.input(24): # bottom button click
+            print("bottom button")
             if current_time - last_press_time >= debounce_delay:
                 last_press_time = current_time
                 current_row = (current_row + 1) % len(menu)
 
         time.sleep(0.1)  # Small delay to prevent high CPU usage
 
-def main_menu():
-    systemCmd("clear")
-    curses.wrapper(main) # launch main UI
-
-main_menu()
+systemCmd("clear")
+curses.wrapper(main)
