@@ -86,18 +86,17 @@ def main(stdscr):
 
         # Display the menu
         for idx, (text, color_pair) in enumerate(menu):
-            print(idx)
-            print(current_row)
             x = 4
             y = h // 2 - len(menu) // 2 + idx - 2
-            if idx == current_row:
-                stdscr.attron(curses.color_pair(4) | curses.A_REVERSE)
+            if idx == current_row: #when selected reverse colors
+                print("idx == current_row")
+                stdscr.attron(curses.color_pair(color_pair) | curses.A_REVERSE)
                 stdscr.addstr(y, x, text, curses.A_BOLD)
-                stdscr.attroff(curses.color_pair(4) | curses.A_REVERSE)
-            else:
-                stdscr.attron(curses.color_pair(4))
+                stdscr.attroff(curses.color_pair(color_pair) | curses.A_REVERSE)
+            else: #not selected use default color
+                stdscr.attron(curses.color_pair(color_pair))
                 stdscr.addstr(y, x, text, curses.A_BOLD)
-                stdscr.attroff(curses.color_pair(4))
+                stdscr.attroff(curses.color_pair(color_pair))
 
         stdscr.refresh()
 
