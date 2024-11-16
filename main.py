@@ -133,7 +133,7 @@ def main(stdscr):
                 if press_duration < long_hold_duration:
                     # short click
                     last_press_time = current_time
-                    current_row = (current_row + -1) % len(menu)
+                    current_row = (current_row - 1) % len(menu)
                 # Reset the start time
                 button_press_start_time = None
 
